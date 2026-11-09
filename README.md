@@ -1,91 +1,87 @@
-# 🚀 Учебные CI/CD Pipelines
+# 🚀 CI/CD Pipelines
 
-Коллекция небольших проектов, демонстрирующих полный цикл автоматизации с помощью **GitHub Actions**: проверки кода, тестирование, сборку приложений и публикацию готовых артефактов.
+Учебный набор независимых проектов, демонстрирующих CI/CD на GitHub Actions: автоматические проверки, тестирование, сборку приложений и доставку готовых артефактов.
 
-## 📋 Сводная таблица
+Каждый сценарий находится в **отдельном GitHub-репозитории**. Этот репозиторий служит главным каталогом и точкой входа.
 
-| # | Проект | Язык | CI | Артефакт | Публикация | Триггер |
-|:-:|---|---|---|---|---|---|
-| 1 | [hello-rust](./projects/hello-rust) | 🦀 Rust | fmt, Clippy, tests | Docker image | GHCR | push в `main` |
-| 2 | [hello-go](./projects/hello-go) | 🐹 Go | gofmt, vet, tests | Docker image | GHCR | push в `main` |
-| 3 | [hello-go-releases](./projects/hello-go-releases) | 🐹 Go | gofmt, vet, tests | 5 бинарников | GitHub Releases | тег `v*` |
-| 4 | [hello-python-releases](./projects/hello-python-releases) | 🐍 Python | Ruff, pytest | 3 бинарника | GitHub Releases | тег `v*` |
-| 5 | [hello-static](./projects/hello-static) | HTML/CSS/JS | HTML/CSS/JS validation | Static site | GitHub Pages | push в `main` |
-| 6 | [hello-pages](./projects/hello-pages) | React + Vite | ESLint, build | `dist/` | GitHub Pages | push в `main` |
+## 📋 Список проектов
 
-## Структура
+| # | Проект | Стек | Что делает | Артефакт / публикация | Триггер |
+|:-:|---|---|---|---|---|
+| 1 | [hello-rust](https://github.com/anitouchq/hello-rust) | 🦀 Rust | fmt, Clippy, tests, Docker build | Docker image → GHCR | push в `main` |
+| 2 | [hello-go](https://github.com/anitouchq/hello-go) | 🐹 Go | gofmt, vet, tests, Docker build | Docker image → GHCR | push в `main` |
+| 3 | [hello-go-releases](https://github.com/anitouchq/hello-go-releases) | 🐹 Go | lint, tests, matrix build | Бинарники для 5 платформ → GitHub Releases | тег `v*` |
+| 4 | [hello-python](https://github.com/anitouchq/hello-python) | 🐍 Python | Ruff, pytest, PyInstaller | Бинарники для 3 платформ → GitHub Releases | тег `v*` |
+| 5 | [hello-static](https://github.com/anitouchq/hello-static) | 🌐 HTML/CSS/JS | HTML, CSS и JS validation | Static site → GitHub Pages | push в `main` |
+| 6 | [hello-pages](https://github.com/anitouchq/hello-pages) | ⚛️ React + Vite | ESLint, production build | `dist/` → GitHub Pages | push в `main` |
 
-```text
-.
-├── .github/workflows/
-│   ├── validate.yml
-│   ├── hello-rust.yml
-│   ├── hello-go.yml
-│   ├── hello-go-releases.yml
-│   ├── hello-python-releases.yml
-│   ├── hello-static-pages.yml
-│   └── hello-react-pages.yml
-├── projects/
-│   ├── hello-rust/
-│   ├── hello-go/
-│   ├── hello-go-releases/
-│   ├── hello-python-releases/
-│   ├── hello-static/
-│   └── hello-pages/
-└── README.md
-```
+> Ссылки ведут на отдельные репозитории проектов. Публикация и статусы будут отмечены после создания репозиториев и успешных запусков workflow.
 
-## 🐳 Docker images → GHCR
+## 🧩 Архитектура
 
-Для Rust и Go workflow выполняет форматирование, статический анализ, тесты и release-сборку. Только после успешного CI образы собираются и отправляются в GitHub Container Registry.
+Каждый проект автономен и содержит собственные:
+- исходный код и конфигурацию;
+- тесты и проверки качества;
+- Dockerfile — для проектов с контейнеризацией;
+- workflow в `.github/workflows/`;
+- README с командами запуска и описанием CI/CD.
+
+Главный репозиторий не собирает приложения и не выполняет деплой. Он объединяет проекты в единое портфолио.
+
+## 🐳 Docker → GitHub Container Registry
+
+Проекты Rust и Go демонстрируют последовательность:
+
+1. Проверка форматирования и статический анализ.
+2. Запуск тестов.
+3. Сборка приложения.
+4. Сборка Docker-образа.
+5. Публикация образа в GHCR после успешного CI.
+
+Пример запуска опубликованного образа:
 
 ```bash
 docker pull ghcr.io/anitouchq/hello-rust:latest
 docker run --rm ghcr.io/anitouchq/hello-rust:latest
-
-docker pull ghcr.io/anitouchq/hello-go:latest
-docker run --rm ghcr.io/anitouchq/hello-go:latest
 ```
-
-Публикуемые пакеты можно сделать общедоступными в настройках соответствующего пакета GitHub Packages.
 
 ## 📦 GitHub Releases
 
-Go- и Python-приложения собираются под несколько операционных систем. Чтобы создать новую версию, отправьте тег вида `v1.0.0`:
+Go- и Python-проекты собирают исполняемые файлы для нескольких операционных систем. Новый релиз запускается тегом:
 
 ```bash
 git tag v1.0.0
 git push origin v1.0.0
 ```
 
-Готовые исполняемые файлы прикладываются к GitHub Release.
+GitHub Actions проверяет исходный код, выполняет матричную сборку и прикладывает бинарники к GitHub Release.
 
 ## 🌐 GitHub Pages
 
-Два отдельных сценария публикации:
+Два отдельных сценария доставки сайта:
 
-- **Static HTML** — проверки HTML, CSS и JavaScript, затем деплой статических файлов без сборки.
-- **React + Vite** — ESLint и production build в CI, передача `dist/` как Pages artifact и публикация только после успешного CI.
+- **Static HTML** — статические файлы валидируются и публикуются без этапа сборки.
+- **React + Vite** — CI запускает линтер и production build; собранный `dist/` передаётся в job деплоя как artifact.
 
-Для публикации через Pages выберите **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+## 🔐 Безопасность и permissions
 
-## 🔐 Разрешения GitHub Actions
-
-- `contents: read` — checkout;
-- `packages: write` — публикация в GHCR;
+В workflow используются минимально необходимые разрешения:
+- `contents: read` — получение исходного кода;
+- `packages: write` — публикация Docker-образов в GHCR;
 - `contents: write` — создание GitHub Releases;
-- `pages: write` и `id-token: write` — GitHub Pages.
+- `pages: write` и `id-token: write` — деплой в GitHub Pages.
 
-Workflow используют встроенный `GITHUB_TOKEN`; дополнительные секреты для GHCR и Releases не требуются.
+Для GHCR и GitHub Releases применяется встроенный `GITHUB_TOKEN`. Не следует добавлять токены непосредственно в исходный код.
 
-## 🧪 Проверка
-
-Откройте вкладку **Actions**, чтобы увидеть запуски, логи jobs и статус шагов. Workflow находятся в корневой папке `.github/workflows`, а исходники каждого учебного приложения — в `projects/`.
+## 🛠 Технологии
 
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-2088FF?logo=githubactions&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Images-2496ED?logo=docker&logoColor=white)
-![GHCR](https://img.shields.io/badge/GHCR-Registry-181717?logo=github&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?logo=docker&logoColor=white)
+![GHCR](https://img.shields.io/badge/GHCR-Container%20Registry-181717?logo=github&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-stable-000000?logo=rust&logoColor=white)
+![Go](https://img.shields.io/badge/Go-1.23-00ADD8?logo=go&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 
 ---
 
-Учебный проект · GitHub Actions · CI/CD
+Учебное портфолио · GitHub Actions · CI/CD
