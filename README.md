@@ -1,84 +1,80 @@
-# 🚀 CI/CD Pipelines
+# CI/CD Pipelines
 
-Учебное портфолио из **10 независимых проектов**, демонстрирующих CI/CD с помощью **GitHub Actions**: автоматические проверки, тестирование, сборку приложений и публикацию готовых артефактов.
+Учебное портфолио из **10 независимых проектов**, демонстрирующих CI/CD с помощью GitHub Actions: проверки кода, тестирование, сборку приложений и публикацию готовых артефактов.
 
-Каждый проект находится в отдельном GitHub-репозитории. Этот репозиторий — общий каталог и точка входа.
+Каждый проект находится в отдельном репозитории. Этот каталог объединяет проекты, их pipeline и опубликованные результаты.
 
-## 📋 Список проектов
+## Список проектов
 
-| # | Проект | Стек | Что делает | Артефакт / публикация | Actions |
-|:-:|---|---|---|---|---|
-| 1 | [hello-rust](https://github.com/anitouchq/hello-rust) | 🦀 Rust | fmt, Clippy, unit/integration tests, Docker | Docker image → GHCR | [Runs](https://github.com/anitouchq/hello-rust/actions) |
-| 2 | [hello-go](https://github.com/anitouchq/hello-go) | 🐹 Go | gofmt, vet, tests, Docker | Docker image → GHCR | [Runs](https://github.com/anitouchq/hello-go/actions) |
-| 3 | [hello-go-releases](https://github.com/anitouchq/hello-go-releases) | 🐹 Go | gofmt, vet, tests, matrix build | Бинарники для 5 платформ → GitHub Releases | [Runs](https://github.com/anitouchq/hello-go-releases/actions) |
-| 4 | [hello-python-releases](https://github.com/anitouchq/hello-python-releases) | 🐍 Python | Ruff, pytest, PyInstaller | Бинарники для Linux, macOS и Windows → GitHub Releases | [Runs](https://github.com/anitouchq/hello-python-releases/actions) |
-| 5 | [hello-dotnet](https://github.com/anitouchq/hello-dotnet) | 💠 C# / .NET 10 | restore, build, xUnit tests | Linux x64 + Windows x64 → GitHub Releases | [Runs](https://github.com/anitouchq/hello-dotnet/actions) |
-| 6 | [hello-gui](https://github.com/anitouchq/hello-gui) | 🎨 Go + Fyne | gofmt, vet, tests, GUI build | Linux, macOS, Windows → GitHub Releases | [Runs](https://github.com/anitouchq/hello-gui/actions) |
-| 7 | [hex-loader](https://github.com/anitouchq/hex-loader) | 🔎 Go + Fyne | Intel HEX parser, checksum tests, GUI build | Linux, macOS, Windows → GitHub Releases | [Runs](https://github.com/anitouchq/hex-loader/actions) |
-| 8 | [arduino-manager](https://github.com/anitouchq/arduino-manager) | 🔧 Go + Fyne | Arduino CLI GUI, board parser tests | Linux, macOS, Windows → GitHub Releases | [Runs](https://github.com/anitouchq/arduino-manager/actions) |
-| 9 | [hello-static](https://github.com/anitouchq/hello-static) | 🌐 HTML/CSS/JS | Проверка HTML, CSS и JS | Static site → GitHub Pages | [Runs](https://github.com/anitouchq/hello-static/actions) |
-| 10 | [hello-pages](https://github.com/anitouchq/hello-pages) | ⚛️ React + Vite | ESLint, production build | `dist/` → GitHub Pages | [Runs](https://github.com/anitouchq/hello-pages/actions) |
+| # | Проект | Стек | Что выполняет CI/CD | Результат |
+|:-:|---|---|---|---|
+| 1 | [hello-rust](https://github.com/anitouchq/hello-rust) | 🦀 Rust | fmt, Clippy, unit/integration tests, release build, Docker | [GHCR](https://github.com/users/anitouchq/packages/container/hello-rust) · [Actions](https://github.com/anitouchq/hello-rust/actions) |
+| 2 | [hello-go](https://github.com/anitouchq/hello-go) | 🐹 Go | gofmt, vet, tests, build, Docker | [GHCR](https://github.com/users/anitouchq/packages/container/hello-go) · [Actions](https://github.com/anitouchq/hello-go/actions) |
+| 3 | [hello-go-releases](https://github.com/anitouchq/hello-go-releases) | 🐹 Go | gofmt, vet, tests, cross-compilation matrix | [Releases](https://github.com/anitouchq/hello-go-releases/releases) · [Actions](https://github.com/anitouchq/hello-go-releases/actions) |
+| 4 | [hello-python-releases](https://github.com/anitouchq/hello-python-releases) | 🐍 Python 3.12 | Ruff, pytest, PyInstaller matrix | [Releases](https://github.com/anitouchq/hello-python-releases/releases) · [Actions](https://github.com/anitouchq/hello-python-releases/actions) |
+| 5 | [hello-dotnet](https://github.com/anitouchq/hello-dotnet) | 💠 C# / .NET 10 | restore, build, xUnit, self-contained publish | [Releases](https://github.com/anitouchq/hello-dotnet/releases) · [Actions](https://github.com/anitouchq/hello-dotnet/actions) |
+| 6 | [hello-gui](https://github.com/anitouchq/hello-gui) | 🎨 Go + Fyne | gofmt, vet, tests, native GUI build matrix | [Releases](https://github.com/anitouchq/hello-gui/releases) · [Actions](https://github.com/anitouchq/hello-gui/actions) |
+| 7 | [hex-loader](https://github.com/anitouchq/hex-loader) | 🔎 Go + Fyne | Intel HEX parser, checksum tests, native GUI build | [Releases](https://github.com/anitouchq/hex-loader/releases) · [Actions](https://github.com/anitouchq/hex-loader/actions) |
+| 8 | [arduino-manager](https://github.com/anitouchq/arduino-manager) | 🔧 Go + Fyne | Arduino CLI integration, parser tests, native GUI build | [Releases](https://github.com/anitouchq/arduino-manager/releases) · [Actions](https://github.com/anitouchq/arduino-manager/actions) |
+| 9 | [hello-static](https://github.com/anitouchq/hello-static) | 🌐 HTML / CSS / JS | HTML/JS checks, Pages artifact, deploy | [Сайт](https://anitouchq.github.io/hello-static/) · [Actions](https://github.com/anitouchq/hello-static/actions) |
+| 10 | [hello-pages](https://github.com/anitouchq/hello-pages) | ⚛️ React 18 + Vite | npm CI, lint/validation, production build, deploy | [Сайт](https://anitouchq.github.io/hello-pages/) · [Actions](https://github.com/anitouchq/hello-pages/actions) |
 
-## 🧩 Как устроен набор
+## Docker → GitHub Container Registry
 
-Каждый репозиторий автономен и содержит собственный исходный код, тесты, workflow и README. Главный каталог не собирает приложения и не выполняет деплой — он объединяет учебные проекты и описывает назначение каждого pipeline.
+В `hello-rust` и `hello-go` pipeline запускает проверки и тесты, собирает приложение, а затем создаёт и публикует Docker-образ в GHCR. Публикационный job зависит от успешного CI и выполняется при push в `main`.
 
-## 🐳 Docker → GitHub Container Registry
-
-В проектах Rust и Go pipeline последовательно выполняет:
-
-1. Проверку форматирования и статический анализ.
-2. Запуск тестов.
-3. Сборку приложения.
-4. Сборку Docker-образа.
-5. Публикацию образа в GHCR после успешного CI при push в `main`.
-
-Пример запуска Rust-образа после публикации:
+Пример запуска Rust-образа:
 
 ```bash
 docker pull ghcr.io/anitouchq/hello-rust:latest
 docker run --rm ghcr.io/anitouchq/hello-rust:latest
 ```
 
-### Доступ workflow к GHCR
+- [Пакет hello-rust](https://github.com/users/anitouchq/packages/container/hello-rust)
+- [Пакет hello-go](https://github.com/users/anitouchq/packages/container/hello-go)
 
-Workflow используют встроенный `GITHUB_TOKEN` с разрешением `packages: write`. Если GitHub возвращает `permission_denied: write_package`, откройте страницу соответствующего пакета → **Package settings → Manage Actions access → Add repository**, выберите репозиторий workflow и выдайте ему роль **Write**. Если пакета ещё нет, сначала проверьте разрешения workflow в **Repository Settings → Actions → General**.
+## GitHub Releases
 
-## 📦 GitHub Releases
+В четырёх проектах бинарники собираются под несколько операционных систем:
 
-Go, Python, .NET и GUI-приложения собираются под несколько операционных систем. Новый релиз запускается отправкой тега:
+| Проект | Сборки |
+|---|---|
+| `hello-go-releases` | Linux amd64/arm64, macOS amd64/arm64, Windows amd64 |
+| `hello-python-releases` | Linux, macOS, Windows |
+| `hello-dotnet` | Linux x64, Windows x64 |
+| `hello-gui`, `hex-loader`, `arduino-manager` | Linux, macOS, Windows |
 
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
+Публикация запускается отправкой тега версии вида `v1.0.0`. До отправки тега выполняются CI-проверки; затем создаются платформенные сборки и GitHub Release. Ссылки на страницы Releases находятся в таблице проектов.
 
-Workflow сначала выполняет CI-проверки, затем матричную сборку и публикацию бинарников в GitHub Release. Для Fyne-приложений сборка выполняется на нативных runner'ах, поскольку Fyne использует CGO и системные графические библиотеки.
+## GitHub Pages
 
-## 🌐 GitHub Pages
+- **hello-static** — статический сайт на HTML, CSS и JavaScript. CI проверяет файлы, загружает `public/` как Pages artifact и публикует его отдельным job.
+- **hello-pages** — React SPA на Vite. CI устанавливает зависимости, запускает проверки и создаёт `dist/`; отдельный job скачивает artifact и публикует сайт.
 
-- **Static HTML** — проверка HTML/CSS/JS и публикация файлов сайта без сборки.
-- **React + Vite** — ESLint, production build, передача `dist/` как artifact и отдельный job деплоя.
+Оба проекта используют `needs: ci` или `needs: build`, чтобы деплой выполнялся только после успешной проверки.
 
-## 🔐 Permissions
+## Структура отдельных проектов
 
-Для workflow применяются минимально необходимые разрешения:
-- `contents: read` — checkout;
-- `packages: write` — публикация контейнеров в GHCR;
-- `contents: write` — создание Releases;
-- `pages: write` и `id-token: write` — публикация на GitHub Pages.
+В каждом репозитории есть собственный README с описанием исходных файлов, локального запуска, CI/CD workflow и ссылками на результаты:
 
-Для GHCR и Releases используются встроенные токены `GITHUB_TOKEN`; не нужно хранить персональные токены в исходном коде.
+- [hello-rust](https://github.com/anitouchq/hello-rust#readme)
+- [hello-go](https://github.com/anitouchq/hello-go#readme)
+- [hello-go-releases](https://github.com/anitouchq/hello-go-releases#readme)
+- [hello-python-releases](https://github.com/anitouchq/hello-python-releases#readme)
+- [hello-dotnet](https://github.com/anitouchq/hello-dotnet#readme)
+- [hello-gui](https://github.com/anitouchq/hello-gui#readme)
+- [hex-loader](https://github.com/anitouchq/hex-loader#readme)
+- [arduino-manager](https://github.com/anitouchq/arduino-manager#readme)
+- [hello-static](https://github.com/anitouchq/hello-static#readme)
+- [hello-pages](https://github.com/anitouchq/hello-pages#readme)
 
-## 🛠 Технологии
+## Общие принципы workflow
 
-![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-2088FF?logo=githubactions&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?logo=docker&logoColor=white)
-![GHCR](https://img.shields.io/badge/GHCR-Container%20Registry-181717?logo=github&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-stable-000000?logo=rust&logoColor=white)
-![Go](https://img.shields.io/badge/Go-1.27-00ADD8?logo=go&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
-![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)
+- Минимальные права `GITHUB_TOKEN`: `contents: read` для CI, `packages: write` для GHCR и `contents: write` только для Release job.
+- Для GitHub Pages используются `pages: write` и `id-token: write`.
+- Сборки и публикации разделены на jobs с явными зависимостями через `needs`.
+- Артефакты передаются между jobs через Actions artifacts.
+- Pull request запускают проверки, но не публикуют контейнеры, релизы или сайт.
 
 ---
 
