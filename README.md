@@ -6,14 +6,14 @@
 
 ## 📋 Список проектов
 
-| # | Проект | Стек | Что делает | Артефакт / публикация | Триггер |
+| # | Проект | Стек | Что делает | Артефакт / публикация | Actions |
 |:-:|---|---|---|---|---|
-| 1 | [hello-rust](https://github.com/anitouchq/hello-rust) | 🦀 Rust | fmt, Clippy, unit/integration tests, Docker | Docker image → GHCR | push в `main` |
-| 2 | [hello-go](https://github.com/anitouchq/hello-go) | 🐹 Go | gofmt, vet, tests, Docker | Docker image → GHCR | push в `main` |
-| 3 | [hello-go-releases](https://github.com/anitouchq/hello-go-releases) | 🐹 Go | gofmt, vet, tests, matrix build | Бинарники для 5 платформ → GitHub Releases | тег `v*` |
-| 4 | [hello-python-releases](https://github.com/anitouchq/hello-python-releases) | 🐍 Python | Ruff, pytest, PyInstaller | Бинарники для Linux, macOS и Windows → GitHub Releases | тег `v*` |
-| 5 | [hello-static](https://github.com/anitouchq/hello-static) | 🌐 HTML/CSS/JS | Проверка HTML, CSS и JS | Static site → GitHub Pages | push в `main` |
-| 6 | [hello-pages](https://github.com/anitouchq/hello-pages) | ⚛️ React + Vite | ESLint, production build | `dist/` → GitHub Pages | push в `main` |
+| 1 | [hello-rust](https://github.com/anitouchq/hello-rust) | 🦀 Rust | fmt, Clippy, unit/integration tests, Docker | Docker image → GHCR | [Runs](https://github.com/anitouchq/hello-rust/actions) |
+| 2 | [hello-go](https://github.com/anitouchq/hello-go) | 🐹 Go | gofmt, vet, tests, Docker | Docker image → GHCR | [Runs](https://github.com/anitouchq/hello-go/actions) |
+| 3 | [hello-go-releases](https://github.com/anitouchq/hello-go-releases) | 🐹 Go | gofmt, vet, tests, matrix build | Бинарники для 5 платформ → GitHub Releases | [Runs](https://github.com/anitouchq/hello-go-releases/actions) |
+| 4 | [hello-python-releases](https://github.com/anitouchq/hello-python-releases) | 🐍 Python | Ruff, pytest, PyInstaller | Бинарники для Linux, macOS и Windows → GitHub Releases | [Runs](https://github.com/anitouchq/hello-python-releases/actions) |
+| 5 | [hello-static](https://github.com/anitouchq/hello-static) | 🌐 HTML/CSS/JS | Проверка HTML, CSS и JS | Static site → GitHub Pages | [Runs](https://github.com/anitouchq/hello-static/actions) |
+| 6 | [hello-pages](https://github.com/anitouchq/hello-pages) | ⚛️ React + Vite | ESLint, production build | `dist/` → GitHub Pages | [Runs](https://github.com/anitouchq/hello-pages/actions) |
 
 ## 🧩 Как устроен набор
 
@@ -36,6 +36,10 @@ docker pull ghcr.io/anitouchq/hello-rust:latest
 docker run --rm ghcr.io/anitouchq/hello-rust:latest
 ```
 
+### Доступ workflow к GHCR
+
+Workflow используют встроенный `GITHUB_TOKEN` с разрешением `packages: write`. Если GitHub возвращает `permission_denied: write_package`, откройте страницу соответствующего пакета → **Package settings → Manage Actions access → Add repository**, выберите репозиторий workflow и выдайте ему роль **Write**. Если пакета ещё нет, сначала проверьте настройки разрешений workflow в **Repository Settings → Actions → General**.
+
 ## 📦 GitHub Releases
 
 Go- и Python-приложения собираются под несколько операционных систем. Новый релиз запускается отправкой тега:
@@ -54,7 +58,7 @@ Workflow сначала выполняет CI-проверки, затем ма�
 
 ## 🔐 Permissions
 
-Для workflow применяются минимальные разрешения:
+Для workflow применяются минимально необходимые разрешения:
 - `contents: read` — checkout;
 - `packages: write` — публикация контейнеров в GHCR;
 - `contents: write` — создание Releases;
