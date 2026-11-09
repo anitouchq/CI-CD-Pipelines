@@ -1,6 +1,6 @@
 # 🚀 CI/CD Pipelines
 
-Учебное портфолио из независимых репозиториев, демонстрирующих CI/CD с помощью **GitHub Actions**: автоматические проверки, тестирование, сборку приложений и публикацию готовых артефактов.
+Учебное портфолио из **10 независимых проектов**, демонстрирующих CI/CD с помощью **GitHub Actions**: автоматические проверки, тестирование, сборку приложений и публикацию готовых артефактов.
 
 Каждый проект находится в отдельном GitHub-репозитории. Этот репозиторий — общий каталог и точка входа.
 
@@ -12,8 +12,12 @@
 | 2 | [hello-go](https://github.com/anitouchq/hello-go) | 🐹 Go | gofmt, vet, tests, Docker | Docker image → GHCR | [Runs](https://github.com/anitouchq/hello-go/actions) |
 | 3 | [hello-go-releases](https://github.com/anitouchq/hello-go-releases) | 🐹 Go | gofmt, vet, tests, matrix build | Бинарники для 5 платформ → GitHub Releases | [Runs](https://github.com/anitouchq/hello-go-releases/actions) |
 | 4 | [hello-python-releases](https://github.com/anitouchq/hello-python-releases) | 🐍 Python | Ruff, pytest, PyInstaller | Бинарники для Linux, macOS и Windows → GitHub Releases | [Runs](https://github.com/anitouchq/hello-python-releases/actions) |
-| 5 | [hello-static](https://github.com/anitouchq/hello-static) | 🌐 HTML/CSS/JS | Проверка HTML, CSS и JS | Static site → GitHub Pages | [Runs](https://github.com/anitouchq/hello-static/actions) |
-| 6 | [hello-pages](https://github.com/anitouchq/hello-pages) | ⚛️ React + Vite | ESLint, production build | `dist/` → GitHub Pages | [Runs](https://github.com/anitouchq/hello-pages/actions) |
+| 5 | [hello-dotnet](https://github.com/anitouchq/hello-dotnet) | 💠 C# / .NET 10 | restore, build, xUnit tests | Linux x64 + Windows x64 → GitHub Releases | [Runs](https://github.com/anitouchq/hello-dotnet/actions) |
+| 6 | [hello-gui](https://github.com/anitouchq/hello-gui) | 🎨 Go + Fyne | gofmt, vet, tests, GUI build | Linux, macOS, Windows → GitHub Releases | [Runs](https://github.com/anitouchq/hello-gui/actions) |
+| 7 | [hex-loader](https://github.com/anitouchq/hex-loader) | 🔎 Go + Fyne | Intel HEX parser, checksum tests, GUI build | Linux, macOS, Windows → GitHub Releases | [Runs](https://github.com/anitouchq/hex-loader/actions) |
+| 8 | [arduino-manager](https://github.com/anitouchq/arduino-manager) | 🔧 Go + Fyne | Arduino CLI GUI, board parser tests | Linux, macOS, Windows → GitHub Releases | [Runs](https://github.com/anitouchq/arduino-manager/actions) |
+| 9 | [hello-static](https://github.com/anitouchq/hello-static) | 🌐 HTML/CSS/JS | Проверка HTML, CSS и JS | Static site → GitHub Pages | [Runs](https://github.com/anitouchq/hello-static/actions) |
+| 10 | [hello-pages](https://github.com/anitouchq/hello-pages) | ⚛️ React + Vite | ESLint, production build | `dist/` → GitHub Pages | [Runs](https://github.com/anitouchq/hello-pages/actions) |
 
 ## 🧩 Как устроен набор
 
@@ -38,18 +42,18 @@ docker run --rm ghcr.io/anitouchq/hello-rust:latest
 
 ### Доступ workflow к GHCR
 
-Workflow используют встроенный `GITHUB_TOKEN` с разрешением `packages: write`. Если GitHub возвращает `permission_denied: write_package`, откройте страницу соответствующего пакета → **Package settings → Manage Actions access → Add repository**, выберите репозиторий workflow и выдайте ему роль **Write**. Если пакета ещё нет, сначала проверьте настройки разрешений workflow в **Repository Settings → Actions → General**.
+Workflow используют встроенный `GITHUB_TOKEN` с разрешением `packages: write`. Если GitHub возвращает `permission_denied: write_package`, откройте страницу соответствующего пакета → **Package settings → Manage Actions access → Add repository**, выберите репозиторий workflow и выдайте ему роль **Write**. Если пакета ещё нет, сначала проверьте разрешения workflow в **Repository Settings → Actions → General**.
 
 ## 📦 GitHub Releases
 
-Go- и Python-приложения собираются под несколько операционных систем. Новый релиз запускается отправкой тега:
+Go, Python, .NET и GUI-приложения собираются под несколько операционных систем. Новый релиз запускается отправкой тега:
 
 ```bash
 git tag v1.0.0
 git push origin v1.0.0
 ```
 
-Workflow сначала выполняет CI-проверки, затем матричную сборку и публикацию бинарников в GitHub Release.
+Workflow сначала выполняет CI-проверки, затем матричную сборку и публикацию бинарников в GitHub Release. Для Fyne-приложений сборка выполняется на нативных runner'ах, поскольку Fyne использует CGO и системные графические библиотеки.
 
 ## 🌐 GitHub Pages
 
@@ -72,9 +76,10 @@ Workflow сначала выполняет CI-проверки, затем ма�
 ![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?logo=docker&logoColor=white)
 ![GHCR](https://img.shields.io/badge/GHCR-Container%20Registry-181717?logo=github&logoColor=white)
 ![Rust](https://img.shields.io/badge/Rust-stable-000000?logo=rust&logoColor=white)
-![Go](https://img.shields.io/badge/Go-1.24-00ADD8?logo=go&logoColor=white)
+![Go](https://img.shields.io/badge/Go-1.27-00ADD8?logo=go&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)
 
 ---
 
-Учебное портфолио · GitHub Actions · CI/CD
+Учебное портфолио · 10 проектов · GitHub Actions · CI/CD
