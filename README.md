@@ -44,7 +44,6 @@ docker run --rm ghcr.io/anitouchq/hello-rust:latest
 | `hello-dotnet` | Linux x64, Windows x64 |
 | `hello-gui`, `hex-loader`, `arduino-manager` | Linux, macOS, Windows |
 
-Публикация запускается отправкой тега версии вида `v1.0.0`. До отправки тега выполняются CI-проверки; затем создаются платформенные сборки и GitHub Release. Ссылки на страницы Releases находятся в таблице проектов.
 
 ## GitHub Pages
 
